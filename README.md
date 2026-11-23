@@ -23,7 +23,6 @@ npm run og             # regenerates public/og.png (needs Playwright's Chromium 
 |---|---|
 | LinkedIn URL | `src/data/site.ts` → `linkedin` |
 | Email | `src/data/site.ts` → `email` |
-| About text | `src/pages/index.astro` → `#about` |
 | Site URL | `astro.config.mjs` → `site` (canonical URLs, Open Graph image, sitemap) |
 
 Until you fill them in, these show on the page as dashed **TODO** chips, never as broken links.

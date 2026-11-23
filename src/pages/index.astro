@@ -121,10 +121,18 @@ const SKILLS: [string, string[]][] = [
     <div class="wrap">
       <p class="eyebrow">04 · About</p>
       <h2 id="about-title">About me.</h2>
-      <!-- TODO: replace this placeholder with your own About text. -->
-      <div class="todo-box" data-reveal>
-        <p><span class="todo-tag">TODO</span> Placeholder: a few sentences about you. Where you studied or work, what you're looking for next, and what you like building.</p>
-        <p>Edit this in <code>src/pages/index.astro</code> (search for "TODO").</p>
+      <div class="about" data-reveal>
+        <div class="prose">
+          <p>I'm an M.Tech student in Artificial Intelligence and Data Science at SASTRA Deemed University, after a B.Tech in Computer Science Engineering at Delhi Technical Campus. I build and ship production AI systems, and then I keep watching them once they're live.</p>
+          <p>Citebase and Nightwarden came out of that. Citebase answers from a company's own documents with passage-level citations. Nightwarden watches it in production for the failures ordinary monitoring misses: HTTP 200, a 0% error rate, and answers that are wrong. In both, I write the evaluation before I make a claim, and every model call has a fallback.</p>
+          <p>Before this, I was a software developer intern at ATRIBS Software Systems, working on a consultant-matching platform: onboarding, job posting, and backend logic that ranks candidates against a job's requirements. Earlier, as an embedded systems and IoT intern at Acmegrade, I built sensor-driven prototypes. Away from code, I was vice president of the dramatics club Aavansh and a National Service Scheme volunteer.</p>
+        </div>
+        <dl class="facts">
+          <div><dt>Studying</dt><dd>M.Tech, AI and Data Science<br />SASTRA Deemed University, 2025–2027 (expected)</dd></div>
+          <div><dt>Previously</dt><dd>B.Tech, Computer Science Engineering<br />Delhi Technical Campus (GGSIPU), 2021–2025</dd></div>
+          <div><dt>Recent work</dt><dd>Software Developer Intern<br />ATRIBS Software Systems, Dec 2025</dd></div>
+          <div><dt>Looking for</dt><dd>AI/ML engineering, applied AI and software engineering roles</dd></div>
+        </dl>
       </div>
     </div>
   </section>
