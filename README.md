@@ -5,7 +5,7 @@ My personal site: case studies of [Citebase](https://github.com/Vegess/citebase)
 - **Astro, static output.** The only dependency is `astro`.
 - **Vanilla CSS and hand-written inline SVG.** No UI, animation or chart libraries.
 - **Motion, all hand-written:** CSS keyframes, SVG `stroke-dashoffset` draw-ins, IntersectionObserver reveals, `requestAnimationFrame` count-ups, cross-page View Transitions (`@view-transition`). With `prefers-reduced-motion`, everything renders in its final state and nothing loops.
-- **Content:** `src/data/projects.ts`. Every fact and number comes from the project's own README.
+- **Content:** `src/data/projects.ts`. Facts and numbers come from each project's README and code on GitHub, and from my current resume.
 
 ## Develop
 

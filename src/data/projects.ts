@@ -1,7 +1,7 @@
 /*
- * Project case studies. Every fact and number here is taken from the project's own README
- * on GitHub (linked as `repo`). Nothing is estimated or rounded up: where a README reports
- * run-to-run variance or synthetic data, the text says so next to the number.
+ * Project case studies. Facts and numbers come from each project's README and code on GitHub
+ * (linked as `repo`) and from my current resume. Nothing is estimated or rounded up: where a
+ * result has run-to-run variance or uses synthetic data, the text says so next to the number.
  */
 
 export type Metric = {
@@ -63,7 +63,7 @@ export const PROJECTS: Project[] = [
     metrics: [
       { value: 24, label: "scored eval questions, written before measuring" },
       { value: 4, prefix: "≤", label: "planned steps per research-agent answer, each shown live" },
-      { value: 117, label: "automated tests in the suite" },
+      { value: 206, label: "automated tests, run in CI with retrieval evaluation" },
     ],
     stack: ["FastAPI", "PostgreSQL + pgvector", "fastembed (ONNX)", "Groq · Gemini · Anthropic", "React + Vite", "Docker · Render · Vercel"],
     live: "https://documind-beta-lac.vercel.app",
@@ -115,7 +115,8 @@ export const PROJECTS: Project[] = [
               ["Answerable", "18", "retrieval hit@6, MRR"],
               ["Not answerable from the documents", "3", "says \"I don't know\""],
               ["Whole-document tasks", "3", "routing"],
-              ["Test suite", "117 tests", "pytest in CI on every push and PR"],
+              ["Test suite", "206 tests", "pytest in CI on every push and PR"],
+              ["Schema migrations", "11", "Alembic"],
             ],
           },
         ],
@@ -181,7 +182,7 @@ export const PROJECTS: Project[] = [
           "Labels and a rules baseline were written and frozen before the agent existed, so neither could be tuned to make the agent look good.",
           "The agent investigates with four read-only tools (recent logs, metrics, deploy history, past incidents) and must end by calling decide. The prompt describes the costs of paging versus missing a failure; it contains no \"signal X means action Y\" rules.",
           "Fail loud: Groq → Gemini → frozen rules. If both models fail, the rules decide and silent-failure signals always page. Anything not decided by Groq is marked degraded.",
-          "Two orchestrators for the same agent, a plain tool-calling loop and a LangGraph state machine, compared on the same held-out cases. LangGraph's lead was within run-to-run variance, so it is read as \"no worse\", not as a win.",
+          "Two orchestrators for the same agent, a plain tool-calling loop and a LangGraph state machine, compared on the same 48 held-out cases: 54.2% vs 43.8% accuracy in a same-day comparison. That lead is within run-to-run variance, so it is read as \"no worse\", not as a win.",
           "Free-tier idle restarts are recorded on the timeline, not triaged.",
           "Cost controls: one state row read per poll instead of past snapshots, stored readings keep only the keys something reads, and public reads are edge-cached.",
         ],
@@ -209,6 +210,11 @@ export const PROJECTS: Project[] = [
               ["23 Oct 2026", "43.8%", "75.0%", "33.3%"],
             ],
             note: "Results vary by about 15 points between runs, and n = 4 per scenario is small.",
+          },
+          {
+            caption: "Citebase in production, as measured by Nightwarden",
+            head: ["Measure", "Result"],
+            rows: [["Seven-day uptime", "99.9% across 1,008 health checks"]],
           },
           {
             caption: "Measured Neon egress, 24 h of 10-minute polls",
@@ -320,9 +326,9 @@ export const PROJECTS: Project[] = [
     oneLiner: "Debate practice with AI feedback and fact-checked statements.",
     problem: "Practising debate is hard without someone to score your arguments and check your facts.",
     built:
-      "A Flask web app in progress: trending debate topics, audio upload and recording, AI feedback and scoring, and highlighting of true and false statements.",
+      "An NLP platform, in progress, that scores debate arguments for quality, relevance and factual consistency: trending topics, audio upload and recording, feedback and scoring, and true and false statements highlighted.",
     metrics: [],
-    stack: ["Flask", "Bootstrap 5", "Chart.js", "JavaScript audio recording"],
+    stack: ["Flask", "Python NLP (NLTK)", "Bootstrap 5", "Chart.js", "JavaScript audio recording"],
     repo: "https://github.com/Vegess/DebateSphere--Real-Time-AI-Powered-Fact-Checked-Debate-Platform",
     cardDiagram: {
       w: 400, h: 152, title: "DebateSphere: topic, audio, AI feedback, score",

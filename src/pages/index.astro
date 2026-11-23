@@ -14,10 +14,10 @@ const watch = pts((i) => (i === 31 ? 14 : i === 32 ? 104 : i === 33 ? 40 : 66 + 
 const forecast = pts((i) => 92 - Math.floor(i / 6) * 8 + (i % 6 === 0 ? 3 : 0));
 
 const SKILLS: [string, string[]][] = [
-  ["AI / LLM", ["RAG: hybrid search, reciprocal-rank fusion, pgvector", "Tool-calling agents, LangGraph", "Groq, Gemini and Anthropic APIs", "Embeddings with fastembed (ONNX)", "Evaluation harnesses with frozen baselines", "scikit-learn, pandas, Monte Carlo forecasting"]],
-  ["Backend", ["Python, FastAPI, Flask", "SQLAlchemy 2, Alembic", "PostgreSQL, SQLite", "Postgres job queues (SKIP LOCKED)", "Auth: OAuth 2.0, JWT, RBAC", "pytest"]],
-  ["Frontend", ["React, Vite", "Angular 19 (signals)", "Vanilla JS and CSS", "Hand-written SVG charts and motion", "Tailwind CSS", "Astro"]],
-  ["Infra", ["Docker", "Vercel, Render", "Neon (serverless Postgres)", "GitHub Actions CI", "Cost and egress measurement on free tiers"]],
+  ["AI / ML", ["Retrieval-augmented generation: hybrid search, pgvector, ChromaDB", "Agentic AI: LLM tool calling, LangGraph", "LLM evaluation with frozen baselines", "LLM APIs: Groq, Gemini, Anthropic", "ONNX embeddings (fastembed)", "NLP, deep learning, computer vision: PyTorch, OpenCV", "scikit-learn, pandas"]],
+  ["Backend", ["Python (primary), SQL", "FastAPI, Flask, REST APIs", "SQLAlchemy, Alembic", "PostgreSQL, pgvector, SQLite", "OAuth, JWT, role-based access", "pytest"]],
+  ["Frontend", ["React, Vite, Tailwind CSS", "Angular 19", "Node.js, Streamlit", "Vanilla JS, CSS and hand-written SVG", "Astro"]],
+  ["Infra", ["Docker", "Git, GitHub, GitHub Actions CI", "Render, Vercel", "Neon (serverless Postgres)", "Google Colab"]],
 ];
 ---
 <Base>
@@ -47,7 +47,7 @@ const SKILLS: [string, string[]][] = [
     <div class="wrap">
       <p class="eyebrow">01 · Selected work</p>
       <h2 id="work-title">Products with the receipts.</h2>
-      <p class="lede">A RAG product, the agent that watches it in production, and a forecasting tool that scores its own forecasts. Every number below comes from the project's README.</p>
+      <p class="lede">A RAG product, the agent that watches it in production, and a forecasting tool that scores its own forecasts. Every number below is measured, not estimated, and each case study shows where it comes from.</p>
       <div class="cases">
         {PROJECTS.map((p, i) => <ProjectCard project={p} index={i} />)}
       </div>
@@ -141,7 +141,7 @@ const SKILLS: [string, string[]][] = [
     <div class="wrap">
       <p class="eyebrow">05 · Contact</p>
       <h2 id="contact-title">Let's talk.</h2>
-      <p class="lede">Open to AI engineering roles: RAG, agents, evaluation, and the production work around them.</p>
+      <p class="lede">Looking for roles in AI/ML engineering, applied AI and software engineering.</p>
       <div class="contact-links">
         <LinkOrTodo class="btn primary" href={`mailto:${SITE.email}`} todo={isTodo(SITE.email)} label="Email me" />
         <LinkOrTodo class="btn" href={SITE.linkedin} label="LinkedIn" external />
