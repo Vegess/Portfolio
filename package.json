@@ -1,0 +1,17 @@
+{
+  "name": "portfolio",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "K Anirudh: personal portfolio. Astro static output, vanilla CSS, hand-written inline SVG.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check:content": "node scripts/check-content.mjs",
+    "og": "node scripts/og.mjs"
+  },
+  "dependencies": {
+    "astro": "7.4.8"
+  }
+}

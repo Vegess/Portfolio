@@ -1,0 +1,80 @@
+---
+import Base from "../../layouts/Base.astro";
+import Diagram from "../../components/Diagram.astro";
+import Metrics from "../../components/Metrics.astro";
+import { PROJECTS, type Project } from "../../data/projects";
+
+export function getStaticPaths() {
+  return PROJECTS.map((project, i) => ({
+    params: { slug: project.slug },
+    props: { project, prev: PROJECTS[(i - 1 + PROJECTS.length) % PROJECTS.length], next: PROJECTS[(i + 1) % PROJECTS.length] },
+  }));
+}
+interface Props { project: Project; prev: Project; next: Project }
+const { project: p, prev, next } = Astro.props;
+---
+<Base title={p.name} description={`${p.name}: ${p.oneLiner} Problem, architecture, decisions, results and limitations.`} accent={p.accent}>
+  <article style={`--accent:${p.accent}`}>
+    <header class="p-hero wrap">
+      <p class="crumb"><a href="/#work">Work</a> / {p.slug} · {p.status === "Live" ? "live" : "in progress"}</p>
+      <h1 style={`view-transition-name: title-${p.slug}`}>{p.name}</h1>
+      <p class="lede">{p.oneLiner}</p>
+      <div class="p-links">
+        {p.live && <a class="btn primary" href={p.live} rel="noopener" target="_blank">Open the live app<span class="visually-hidden"> (opens in a new tab)</span></a>}
+        <a class:list={["btn", { primary: !p.live }]} href={p.repo} rel="noopener" target="_blank">Source on GitHub<span class="visually-hidden"> (opens in a new tab)</span></a>
+      </div>
+      <Metrics metrics={p.metrics} note={p.metricsNote} />
+      <ul class="chips" aria-label="Stack">{p.stack.map((s) => <li>{s}</li>)}</ul>
+    </header>
+
+    <section class="p-section wrap" aria-labelledby="problem">
+      <h2 id="problem">The problem</h2>
+      <div class="prose">{p.page.problem.map((t) => <p>{t}</p>)}</div>
+    </section>
+
+    <section class="p-section wrap" aria-labelledby="architecture">
+      <h2 id="architecture">Architecture</h2>
+      <figure class="arch" data-reveal>
+        <Diagram spec={p.diagram} accent={p.accent} uid={`arch-${p.slug}`} />
+        <figcaption>{p.diagram.title}. Dashed lines are fallback or read paths.</figcaption>
+      </figure>
+    </section>
+
+    <section class="p-section wrap" aria-labelledby="decisions">
+      <h2 id="decisions">{p.page.decisions.heading}</h2>
+      <div class="prose"><ul>{p.page.decisions.items.map((t) => <li>{t}</li>)}</ul></div>
+    </section>
+
+    <section class="p-section wrap" aria-labelledby="results">
+      <h2 id="results">Results</h2>
+      <div class="prose"><p>{p.page.results.intro}</p></div>
+      {p.page.results.tables.map((t) => (
+        <div class="table-wrap" data-reveal>
+          <table>
+            <caption>{t.caption}</caption>
+            <thead><tr>{t.head.map((h) => <th scope="col">{h}</th>)}</tr></thead>
+            <tbody>{t.rows.map((r) => <tr>{r.map((c, i) => (i === 0 ? <th scope="row">{c}</th> : <td>{c}</td>))}</tr>)}</tbody>
+          </table>
+          {t.note && <p class="table-note">{t.note}</p>}
+        </div>
+      ))}
+    </section>
+
+    <section class="p-section wrap" aria-labelledby="limits">
+      <h2 id="limits">Limitations</h2>
+      <div class="prose"><ul>{p.page.limitations.map((t) => <li>{t}</li>)}</ul></div>
+    </section>
+
+    <section class="p-section wrap" aria-labelledby="next">
+      <h2 id="next">What's next</h2>
+      <div class="prose"><ul>{p.page.next.map((t) => <li>{t}</li>)}</ul></div>
+    </section>
+
+    <nav class="wrap" aria-label="More projects">
+      <div class="pager">
+        <a href={`/projects/${prev.slug}/`} style={`--c:${prev.accent}`}><small>Previous</small><span>{prev.name}</span></a>
+        <a href={`/projects/${next.slug}/`} style={`--c:${next.accent}`}><small>Next</small><span>{next.name}</span></a>
+      </div>
+    </nav>
+  </article>
+</Base>

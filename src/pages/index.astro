@@ -1,0 +1,150 @@
+---
+import Base from "../layouts/Base.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import LinkOrTodo from "../components/LinkOrTodo.astro";
+import { PROJECTS } from "../data/projects";
+import { SITE, isTodo } from "../data/site";
+import fs from "node:fs";
+
+// The resume link stays a TODO placeholder until public/resume.pdf exists.
+const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.url));
+
+// Hero trace: three hand-built signal lines, one per live project.
+const steps = 50;
+const pts = (f: (i: number) => number) =>
+  Array.from({ length: steps + 1 }, (_, i) => `${i ? "L" : "M"}${(i * 1000) / steps} ${f(i).toFixed(1)}`).join(" ");
+const answers = pts((i) => 60 + Math.sin(i / 3.2) * 14 + Math.sin(i / 1.3) * 4);
+const watch = pts((i) => (i === 31 ? 14 : i === 32 ? 104 : i === 33 ? 40 : 66 + Math.sin(i / 2) * 3));
+const forecast = pts((i) => 92 - Math.floor(i / 6) * 8 + (i % 6 === 0 ? 3 : 0));
+
+const SKILLS: [string, string[]][] = [
+  ["AI / LLM", ["RAG: hybrid search, reciprocal-rank fusion, pgvector", "Tool-calling agents, LangGraph", "Groq, Gemini and Anthropic APIs", "Embeddings with fastembed (ONNX)", "Evaluation harnesses with frozen baselines", "scikit-learn, pandas, Monte Carlo forecasting"]],
+  ["Backend", ["Python, FastAPI, Flask", "SQLAlchemy 2, Alembic", "PostgreSQL, SQLite", "Postgres job queues (SKIP LOCKED)", "Auth: OAuth 2.0, JWT, RBAC", "pytest"]],
+  ["Frontend", ["React, Vite", "Angular 19 (signals)", "Vanilla JS and CSS", "Hand-written SVG charts and motion", "Tailwind CSS", "Astro"]],
+  ["Infra", ["Docker", "Vercel, Render", "Neon (serverless Postgres)", "GitHub Actions CI", "Cost and egress measurement on free tiers"]],
+];
+---
+<Base>
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <p class="hero-name"><b>{SITE.name}</b> · {SITE.role}</p>
+    <h1 id="hero-title">AI engineer building <em>RAG products</em> and the agents that keep them running.</h1>
+    <div class="hero-links">
+      <a class="btn primary" href={SITE.github} rel="noopener" target="_blank">GitHub<span class="visually-hidden"> (opens in a new tab)</span></a>
+      <LinkOrTodo class="btn" href={SITE.linkedin} label="LinkedIn" external />
+      <LinkOrTodo class="btn" href={SITE.resume} todo={!hasResume} label="Resume" />
+      <LinkOrTodo class="btn" href={`mailto:${SITE.email}`} todo={isTodo(SITE.email)} label="Email" />
+    </div>
+    <svg class="trace" viewBox="0 0 1000 120" preserveAspectRatio="none" aria-hidden="true" data-diagram>
+      <path class="base" d="M0 110 H1000" />
+      <path class="draw t1" d={answers} pathLength="1" />
+      <path class="draw t3" d={forecast} pathLength="1" />
+      <path class="draw t2" d={watch} pathLength="1" />
+      <circle class="blip" r="4" />
+    </svg>
+    <ul class="trace-legend">
+      <li style="--c: var(--citebase)">Citebase answers</li>
+      <li style="--c: var(--nightwarden)">Nightwarden watches</li>
+      <li style="--c: var(--slipcast)">SlipCast forecasts</li>
+    </ul>
+  </section>
+
+  <section id="work" class="section" aria-labelledby="work-title">
+    <div class="wrap">
+      <p class="eyebrow">01 · Selected work</p>
+      <h2 id="work-title">Products with the receipts.</h2>
+      <p class="lede">A RAG product, the agent that watches it in production, and a forecasting tool that scores its own forecasts. Every number below comes from the project's README.</p>
+      <div class="cases">
+        {PROJECTS.map((p, i) => <ProjectCard project={p} index={i} />)}
+      </div>
+    </div>
+  </section>
+
+  <section id="how" class="section" aria-labelledby="how-title">
+    <div class="wrap">
+      <p class="eyebrow">02 · How I build</p>
+      <h2 id="how-title">Four habits, in every project.</h2>
+      <div class="grid-4">
+        <article class="principle" data-reveal>
+          <svg viewBox="0 0 36 36" aria-hidden="true"><path d="M6 28 L14 18 L20 23 L30 9" /><path d="M24 9 H30 V15" /></svg>
+          <h3>Evaluation before claims</h3>
+          <p>Write the test set and the baseline first, then measure.</p>
+          <ul>
+            <li style="--c: var(--nightwarden)"><b>Nightwarden:</b> labels and the rules baseline frozen before the agent existed; variance between runs reported.</li>
+            <li style="--c: var(--citebase)"><b>Citebase:</b> 24 scored questions written before measuring.</li>
+            <li style="--c: var(--slipcast)"><b>SlipCast:</b> time-based splits, and a ledger that scores every forecast.</li>
+          </ul>
+        </article>
+        <article class="principle" data-reveal>
+          <svg viewBox="0 0 36 36" aria-hidden="true"><path d="M6 12 H22" /><path d="M6 18 H16" /><path d="M6 24 H12" /><path d="M22 12 L28 18 L22 24" /></svg>
+          <h3>A fallback for every AI dependency</h3>
+          <p>When a model fails, the product says so and keeps working.</p>
+          <ul>
+            <li style="--c: var(--nightwarden)"><b>Nightwarden:</b> Groq → Gemini → frozen rules; anything else is marked degraded.</li>
+            <li style="--c: var(--citebase)"><b>Citebase:</b> a failing research agent falls back to a normal search.</li>
+            <li style="--c: var(--slipcast)"><b>SlipCast:</b> rule-based advice when the LLM is missing or fails validation.</li>
+          </ul>
+        </article>
+        <article class="principle" data-reveal>
+          <svg viewBox="0 0 36 36" aria-hidden="true"><rect x="5" y="7" width="11" height="22" rx="2" /><rect x="20" y="7" width="11" height="22" rx="2" /></svg>
+          <h3>Tenant isolation</h3>
+          <p>One customer's data can't reach another's, enforced where the data is.</p>
+          <ul>
+            <li style="--c: var(--citebase)"><b>Citebase:</b> workspace filter in SQL and vector search; join only by single-use invite.</li>
+            <li style="--c: var(--slipcast)"><b>SlipCast:</b> every endpoint tenant-scoped, 404 rather than 403 across tenants.</li>
+          </ul>
+        </article>
+        <article class="principle" data-reveal>
+          <svg viewBox="0 0 36 36" aria-hidden="true"><path d="M8 18 L15 25 L28 11" /><rect x="4" y="4" width="28" height="28" rx="4" /></svg>
+          <h3>Tests and CI</h3>
+          <p>Every push runs the suite, so quality can't quietly slip.</p>
+          <ul>
+            <li style="--c: var(--citebase)"><b>Citebase:</b> pytest plus an offline retrieval eval as a CI gate.</li>
+            <li style="--c: var(--nightwarden)"><b>Nightwarden:</b> tests with no network or API key, migrations and the baseline eval in CI.</li>
+            <li style="--c: var(--slipcast)"><b>SlipCast:</b> tenant-isolation tests for every endpoint; CI with Postgres and <code>alembic check</code>.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="section" aria-labelledby="skills-title">
+    <div class="wrap">
+      <p class="eyebrow">03 · Skills</p>
+      <h2 id="skills-title">What I work with.</h2>
+      <div class="skills">
+        {SKILLS.map(([group, items]) => (
+          <div data-reveal>
+            <h3>{group}</h3>
+            <ul>{items.map((s) => <li>{s}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="section" aria-labelledby="about-title">
+    <div class="wrap">
+      <p class="eyebrow">04 · About</p>
+      <h2 id="about-title">About me.</h2>
+      <!-- TODO: replace this placeholder with your own About text. -->
+      <div class="todo-box" data-reveal>
+        <p><span class="todo-tag">TODO</span> Placeholder: a few sentences about you. Where you studied or work, what you're looking for next, and what you like building.</p>
+        <p>Edit this in <code>src/pages/index.astro</code> (search for "TODO").</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section" aria-labelledby="contact-title">
+    <div class="wrap">
+      <p class="eyebrow">05 · Contact</p>
+      <h2 id="contact-title">Let's talk.</h2>
+      <p class="lede">Open to AI engineering roles: RAG, agents, evaluation, and the production work around them.</p>
+      <div class="contact-links">
+        <LinkOrTodo class="btn primary" href={`mailto:${SITE.email}`} todo={isTodo(SITE.email)} label="Email me" />
+        <LinkOrTodo class="btn" href={SITE.linkedin} label="LinkedIn" external />
+        <a class="btn" href={SITE.github} rel="noopener" target="_blank">GitHub<span class="visually-hidden"> (opens in a new tab)</span></a>
+        <LinkOrTodo class="btn" href={SITE.resume} todo={!hasResume} label="Resume" />
+      </div>
+    </div>
+  </section>
+</Base>

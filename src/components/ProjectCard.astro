@@ -1,0 +1,36 @@
+---
+import type { Project } from "../data/projects";
+import Diagram from "./Diagram.astro";
+import Metrics from "./Metrics.astro";
+interface Props { project: Project; index: number }
+const { project: p, index } = Astro.props;
+---
+<article class:list={["case", { wip: p.status !== "Live" }]} style={`--accent:${p.accent}`} data-reveal aria-labelledby={`case-${p.slug}`}>
+  <header class="case-head">
+    <p class="case-index"><span>{String(index + 1).padStart(2, "0")}</span>{p.status === "Live" ? <span class="status live">Live</span> : <span class="status wip">In progress</span>}</p>
+    <h3 id={`case-${p.slug}`} style={`view-transition-name: title-${p.slug}`}>
+      <a href={`/projects/${p.slug}/`}>{p.name}</a>
+    </h3>
+    <p class="case-one">{p.oneLiner}</p>
+  </header>
+  <div class="case-body">
+    <div class="case-text">
+      <p><strong class="kicker">Problem</strong>{p.problem}</p>
+      <p><strong class="kicker">What I built</strong>{p.built}</p>
+      {p.metrics.length > 0
+        ? <Metrics metrics={p.metrics} note={p.metricsNote} />
+        : <p class="metric-note">No results published yet.</p>}
+      <ul class="chips" aria-label={`${p.name} stack`}>
+        {p.stack.map((s) => <li>{s}</li>)}
+      </ul>
+    </div>
+    <figure class="case-fig">
+      <Diagram spec={p.cardDiagram} accent={p.accent} compact uid={`cd-${p.slug}`} />
+    </figure>
+  </div>
+  <footer class="case-links">
+    <a class="btn primary" href={`/projects/${p.slug}/`}>Read the case study<span class="visually-hidden">: {p.name}</span> <span aria-hidden="true">→</span></a>
+    {p.live && <a class="btn" href={p.live} rel="noopener" target="_blank">Live<span class="visually-hidden"> demo of {p.name} (opens in a new tab)</span></a>}
+    <a class="btn" href={p.repo} rel="noopener" target="_blank">GitHub<span class="visually-hidden"> repository for {p.name} (opens in a new tab)</span></a>
+  </footer>
+</article>

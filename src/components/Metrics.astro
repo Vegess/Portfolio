@@ -1,0 +1,20 @@
+---
+/* Metric tiles. The final number is in the HTML; motion.ts counts up to it with requestAnimationFrame when it scrolls into view. */
+import type { Metric } from "../data/projects";
+interface Props { metrics: Metric[]; note?: string }
+const { metrics, note } = Astro.props;
+const fmt = (m: Metric) => `${m.prefix ?? ""}${m.value.toFixed(m.decimals ?? 0)}${m.suffix ?? ""}`;
+---
+{metrics.length > 0 && (
+  <dl class="metrics">
+    {metrics.map((m) => (
+      <div class="metric">
+        <dt>{m.label}</dt>
+        <dd>
+          <span data-count={m.value} data-decimals={m.decimals ?? 0} data-prefix={m.prefix ?? ""} data-suffix={m.suffix ?? ""}>{fmt(m)}</span>
+        </dd>
+      </div>
+    ))}
+  </dl>
+)}
+{note && <p class="metric-note">{note}</p>}

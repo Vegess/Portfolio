@@ -1,0 +1,9 @@
+---
+/* A link, or, while its value is still a TODO placeholder, a clearly marked non-link. */
+import { isTodo } from "../data/site";
+interface Props { href: string; label: string; todo?: boolean; class?: string; external?: boolean }
+const { href, label, todo = isTodo(href), class: cls, external = false } = Astro.props;
+---
+{todo
+  ? <span class:list={["todo-chip", cls]} title={`TODO: ${label} not set yet`}>{label}<span class="todo-tag">TODO</span></span>
+  : <a class={cls} href={href} {...(external ? { rel: "noopener", target: "_blank" } : {})}>{label}{external && <span class="visually-hidden"> (opens in a new tab)</span>}</a>}
