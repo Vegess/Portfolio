@@ -4,10 +4,6 @@ import ProjectCard from "../components/ProjectCard.astro";
 import LinkOrTodo from "../components/LinkOrTodo.astro";
 import { PROJECTS } from "../data/projects";
 import { SITE, isTodo } from "../data/site";
-import fs from "node:fs";
-
-// The resume link stays a TODO placeholder until public/resume.pdf exists.
-const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.url));
 
 // Hero trace: three hand-built signal lines, one per live project.
 const steps = 50;
@@ -31,7 +27,6 @@ const SKILLS: [string, string[]][] = [
     <div class="hero-links">
       <a class="btn primary" href={SITE.github} rel="noopener" target="_blank">GitHub<span class="visually-hidden"> (opens in a new tab)</span></a>
       <LinkOrTodo class="btn" href={SITE.linkedin} label="LinkedIn" external />
-      <LinkOrTodo class="btn" href={SITE.resume} todo={!hasResume} label="Resume" />
       <LinkOrTodo class="btn" href={`mailto:${SITE.email}`} todo={isTodo(SITE.email)} label="Email" />
     </div>
     <svg class="trace" viewBox="0 0 1000 120" preserveAspectRatio="none" aria-hidden="true" data-diagram>
@@ -143,7 +138,6 @@ const SKILLS: [string, string[]][] = [
         <LinkOrTodo class="btn primary" href={`mailto:${SITE.email}`} todo={isTodo(SITE.email)} label="Email me" />
         <LinkOrTodo class="btn" href={SITE.linkedin} label="LinkedIn" external />
         <a class="btn" href={SITE.github} rel="noopener" target="_blank">GitHub<span class="visually-hidden"> (opens in a new tab)</span></a>
-        <LinkOrTodo class="btn" href={SITE.resume} todo={!hasResume} label="Resume" />
       </div>
     </div>
   </section>

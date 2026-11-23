@@ -10,12 +10,8 @@ export const SITE = {
   description:
     "K Anirudh, AI engineer. Case studies: Citebase (cited answers from company documents), Nightwarden (the agent that monitors it in production), SlipCast (delivery forecasting).",
   github: "https://github.com/Vegess",
-  // TODO: your LinkedIn profile URL, e.g. "https://www.linkedin.com/in/your-handle/"
-  linkedin: "TODO_LINKEDIN_URL",
-  // TODO: your public contact email, e.g. "you@example.com"
-  email: "TODO_EMAIL",
-  // TODO: add your resume as public/resume.pdf (the link stays a placeholder until the file exists)
-  resume: "/resume.pdf",
+  linkedin: "https://www.linkedin.com/in/anirudh-k-908542227/",
+  email: "kanirudh1503@gmail.com",
 };
 
 export const isTodo = (v: string) => v.startsWith("TODO");
