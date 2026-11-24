@@ -19,4 +19,4 @@ npm run og             # regenerates public/og.png (needs Playwright's Chromium 
 
 ## Deploy (Vercel)
 
-Live at **https://portfolio-public.vercel.app**. Vercel builds every push to `main` (framework preset Astro, root directory left empty, no environment variables). If the domain changes, update `site` in `astro.config.mjs`.
+Live at **https://portfolio-public-ten-zeta.vercel.app**. Vercel builds every push to `main` (framework preset Astro, root directory left empty, no environment variables). If the domain changes, update `site` in `astro.config.mjs`.
