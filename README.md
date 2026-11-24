@@ -13,20 +13,10 @@ My personal site: case studies of [Citebase](https://github.com/Vegess/citebase)
 npm install
 npm run dev            # http://localhost:4321
 npm run build          # static site in dist/
-npm run check:content  # lists the placeholders still to fill
+npm run check:content  # checks no placeholders are left
 npm run og             # regenerates public/og.png (needs Playwright's Chromium on this machine)
 ```
 
-## Before sharing: fill these in
-
-| What | Where |
-|---|---|
-| LinkedIn URL | `src/data/site.ts` → `linkedin` |
-| Email | `src/data/site.ts` → `email` |
-| Site URL | `astro.config.mjs` → `site` (canonical URLs, Open Graph image, sitemap) |
-
-Until you fill them in, these show on the page as dashed **TODO** chips, never as broken links.
-
 ## Deploy (Vercel)
 
-Import the repo in Vercel. It detects Astro: the build command is `npm run build` and the output directory is `dist`. Then set `site` in `astro.config.mjs` to the deployed URL and push.
+Live at **https://portfolio-public.vercel.app**. Vercel builds every push to `main` (framework preset Astro, root directory left empty, no environment variables). If the domain changes, update `site` in `astro.config.mjs`.

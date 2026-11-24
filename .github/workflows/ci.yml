@@ -15,5 +15,5 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-      - name: Placeholders still to fill (informational)
-        run: npm run check:content
+      - name: No TODO placeholders left
+        run: npm run check:content -- --strict
